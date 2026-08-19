@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nitin Gym</title>
+    <style>
+        body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        h1 { color: #ffeb3b; text-transform: uppercase; letter-spacing: 2px; }
+        audio { width: 100%; margin: 20px 0; outline: none; }
+        #playlist { list-style: none; padding: 0; max-height: 400px; overflow-y: auto; }
+        #playlist li { background: #222; margin: 8px 0; padding: 15px; border-radius: 8px; cursor: pointer; border-left: 5px solid #ffeb3b; transition: 0.3s; }
+        #playlist li:hover { background: #333; }
+    </style>
+</head>
+<body>
+
+    <h1>Nitin Gym</h1>
+    <p>Workout Playlist</p>
+
+    <audio id="audioPlayer" controls></audio>
+    <ul id="playlist"></ul>
+
+    <script>
+        // Yahan apne 100+ songs ke naam daalna
+        const songs = [
+            "song.mp3"
+        ]; 
+
+        const playlist = document.getElementById('playlist');
+        const player = document.getElementById('audioPlayer');
+
+        songs.forEach((song, index) => {
+            let li = document.createElement('li');
+            li.innerText = `Track ${index + 1}: ${song.replace('.mp3', '')}`;
+            li.onclick = () => {
+                player.src = song;
+                player.play();
+            };
+            playlist.appendChild(li);
+        });
+    </script>
+</body>
+</html>
