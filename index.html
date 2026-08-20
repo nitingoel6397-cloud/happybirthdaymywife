@@ -1,173 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Playlist App</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #0f0f0f;
-      color: #ffffff;
-      padding: 20px;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      text-align: center;
-      color: #ff0000;
-    }
-
-    /* Main Grid Layout */
-    .playlist-container {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* Video Player Box */
-    .player-box {
-      background-color: #1f1f1f;
-      border-radius: 12px;
-      padding: 15px;
-    }
-
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-      height: 0;
-      overflow: hidden;
-      border-radius: 8px;
-      background-color: #000;
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .current-title {
-      margin-top: 15px;
-      font-size: 18px;
-    }
-
-    /* Songs Playlist Sidebar */
-    .song-list {
-      background-color: #1f1f1f;
-      border-radius: 12px;
-      padding: 15px;
-      max-height: 500px;
-      overflow-y: auto;
-    }
-
-    .song-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-bottom: 10px;
-      background-color: #2a2a2a;
-      transition: background 0.2s;
-    }
-
-    .song-item:hover {
-      background-color: #383838;
-    }
-
-    .song-item img {
-      width: 80px;
-      height: 45px;
-      border-radius: 4px;
-      object-fit: cover;
-    }
-
-    .song-info h4 {
-      font-size: 14px;
-      line-height: 1.2;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .playlist-container {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My YouTube Video Collection</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ff0000;
+            margin-bottom: 30px;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .video-card {
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .links-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ff0000;
+        }
+        .links-section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .links-list {
+            list-style: none;
+            padding: 0;
+        }
+        .links-list li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #fff;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .links-list a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        .links-list a:hover {
+            text-decoration: underline;
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
 
-  <h2>My YouTube Video Player</h2>
+    <div class="container">
+        <h1>YouTube Videos</h1>
 
-  <div class="playlist-container">
-    
-    <!-- Left Side: Main Video Player -->
-    <div class="player-box">
-      <div class="video-wrapper">
-        <!-- Aapka Naya Video Link Yahan Default Play Hoga -->
-        <iframe 
-          id="main-player" 
-          src="https://www.youtube.com/embed/Ze3Jjvn4rYI?autoplay=1" 
-          allow="autoplay; encrypted-media; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      </div>
-      <h3 id="video-title" class="current-title">Playing: Live Stream / Song</h3>
+        <!-- Embedded Players Section -->
+        <div class="video-grid">
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/f7n0TzjPhT4" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/6BDkp4NgTkU" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/oajsY7dtEFA" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/cy_jttAa0k0" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/BipX70VPQMg" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/c1hY9_k9Kfk" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/gkSO4JmJ8L4" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/caRlpUytqto" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/e5LShHAE03A" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/bfOy-UNi0kE" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/B72_HsUR0Vc" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/q96_FDAUZdY" allowfullscreen></iframe></div></div>
+            <div class="video-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/zBvggfZOK5o" allowfullscreen></iframe></div></div>
+        </div>
+
+        <!-- Direct Links Section -->
+        <div class="links-section">
+            <h2>Direct Video Links</h2>
+            <ul class="links-list">
+                <li>Video 1: <a href="https://youtu.be/f7n0TzjPhT4" target="_blank">https://youtu.be/f7n0TzjPhT4</a></li>
+                <li>Video 2: <a href="https://youtu.be/6BDkp4NgTkU" target="_blank">https://youtu.be/6BDkp4NgTkU</a></li>
+                <li>Video 3: <a href="https://youtu.be/oajsY7dtEFA" target="_blank">https://youtu.be/oajsY7dtEFA</a></li>
+                <li>Video 4: <a href="https://youtu.be/cy_jttAa0k0" target="_blank">https://youtu.be/cy_jttAa0k0</a></li>
+                <li>Video 5: <a href="https://youtu.be/BipX70VPQMg" target="_blank">https://youtu.be/BipX70VPQMg</a></li>
+                <li>Video 6: <a href="https://youtu.be/c1hY9_k9Kfk" target="_blank">https://youtu.be/c1hY9_k9Kfk</a></li>
+                <li>Video 7: <a href="https://youtu.be/gkSO4JmJ8L4" target="_blank">https://youtu.be/gkSO4JmJ8L4</a></li>
+                <li>Video 8: <a href="https://youtu.be/caRlpUytqto" target="_blank">https://youtu.be/caRlpUytqto</a></li>
+                <li>Video 9: <a href="https://youtu.be/e5LShHAE03A" target="_blank">https://youtu.be/e5LShHAE03A</a></li>
+                <li>Video 10: <a href="https://youtu.be/bfOy-UNi0kE" target="_blank">https://youtu.be/bfOy-UNi0kE</a></li>
+                <li>Video 11: <a href="https://youtu.be/B72_HsUR0Vc" target="_blank">https://youtu.be/B72_HsUR0Vc</a></li>
+                <li>Video 12: <a href="https://youtu.be/q96_FDAUZdY" target="_blank">https://youtu.be/q96_FDAUZdY</a></li>
+                <li>Video 13: <a href="https://youtu.be/zBvggfZOK5o" target="_blank">https://youtu.be/zBvggfZOK5o</a></li>
+            </ul>
+        </div>
     </div>
-
-    <!-- Right Side: Songs List -->
-    <div class="song-list">
-
-      <!-- AAPKA DIYA HUA LINK -->
-      <div class="song-item" onclick="playSong('Ze3Jjvn4rYI', 'My Selected Video (Live/Song)')">
-        <img src="https://img.youtube.com/vi/Ze3Jjvn4rYI/hqdefault.jpg" alt="Thumbnail">
-        <div class="song-info">
-          <h4>My Selected Video</h4>
-        </div>
-      </div>
-
-      <!-- Extra Demo Songs (Aap inhen badal sakte hain) -->
-      <div class="song-item" onclick="playSong('kJQP7kiw5Fk', 'Despacito - Luis Fonsi')">
-        <img src="https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg" alt="Thumbnail">
-        <div class="song-info">
-          <h4>Despacito</h4>
-        </div>
-      </div>
-
-      <div class="song-item" onclick="playSong('JGwWNGJdvx8', 'Shape of You - Ed Sheeran')">
-        <img src="https://img.youtube.com/vi/JGwWNGJdvx8/hqdefault.jpg" alt="Thumbnail">
-        <div class="song-info">
-          <h4>Shape of You</h4>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <script>
-    function playSong(videoId, title) {
-      const player = document.getElementById('main-player');
-      const titleElement = document.getElementById('video-title');
-
-      // Video src change karke naya video play karein
-      player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      titleElement.innerText = `Playing: ${title}`;
-    }
-  </script>
 
 </body>
 </html>
