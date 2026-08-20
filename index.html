@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>In-Page Video Player Gallery</title>
+    <title>Strict In-Page Video Gallery</title>
     <style>
         * {
             box-sizing: border-box;
@@ -46,7 +46,7 @@
         .thumbnail-container {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            padding-top: 56.25%;
             background-color: #000;
         }
         .thumbnail-container img {
@@ -88,7 +88,7 @@
             text-align: center;
         }
 
-        /* Modal (Popup Player) Styles */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -97,17 +97,21 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
         }
-        .modal-content {
+        .modal-wrapper {
             position: relative;
             width: 90%;
             max-width: 900px;
+        }
+        .modal-content {
+            position: relative;
+            width: 100%;
             aspect-ratio: 16 / 9;
             background: #000;
-            border-radius: 8px;
+            border-radius: 8px 8px 0 0;
             overflow: hidden;
         }
         .modal-content iframe {
@@ -115,175 +119,194 @@
             height: 100%;
             border: none;
         }
-        .close-btn {
+
+        /* Anti-Redirection Masks */
+        /* Top Mask: Blocks Title & Share Button */
+        .mask-top {
             position: absolute;
-            top: -40px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 10;
+            background: transparent;
+        }
+        /* Bottom-Right Mask: Blocks "Watch on YouTube" & Logo */
+        .mask-bottom-right {
+            position: absolute;
+            bottom: 0;
             right: 0;
+            width: 160px;
+            height: 50px;
+            z-index: 10;
+            background: transparent;
+        }
+
+        /* Custom In-Page Controls Bar */
+        .custom-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1e1e1e;
+            padding: 10px 15px;
+            border-radius: 0 0 8px 8px;
+        }
+        .custom-controls button {
+            background: #ff4757;
             color: #fff;
-            font-size: 30px;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
             font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
         }
-        .close-btn:hover {
-            color: #ff4757;
+        .custom-controls button:hover {
+            background: #ff6b81;
+        }
+        .close-btn {
+            background: #333 !important;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Video Gallery (In-Page Player)</h1>
+        <h1>Video Gallery (No YouTube Redirection)</h1>
 
         <div class="video-grid">
-            <!-- Video Item 1 -->
             <div class="video-card" onclick="openPlayer('f7n0TzjPhT4')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/f7n0TzjPhT4/hqdefault.jpg" alt="Video 1">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/f7n0TzjPhT4/hqdefault.jpg" alt="Video 1"><div class="play-button"></div></div>
                 <div class="video-info">Video 1</div>
             </div>
-
-            <!-- Video Item 2 -->
             <div class="video-card" onclick="openPlayer('6BDkp4NgTkU')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/6BDkp4NgTkU/hqdefault.jpg" alt="Video 2">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/6BDkp4NgTkU/hqdefault.jpg" alt="Video 2"><div class="play-button"></div></div>
                 <div class="video-info">Video 2</div>
             </div>
-
-            <!-- Video Item 3 -->
             <div class="video-card" onclick="openPlayer('oajsY7dtEFA')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/oajsY7dtEFA/hqdefault.jpg" alt="Video 3">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/oajsY7dtEFA/hqdefault.jpg" alt="Video 3"><div class="play-button"></div></div>
                 <div class="video-info">Video 3</div>
             </div>
-
-            <!-- Video Item 4 -->
             <div class="video-card" onclick="openPlayer('cy_jttAa0k0')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/cy_jttAa0k0/hqdefault.jpg" alt="Video 4">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/cy_jttAa0k0/hqdefault.jpg" alt="Video 4"><div class="play-button"></div></div>
                 <div class="video-info">Video 4</div>
             </div>
-
-            <!-- Video Item 5 -->
             <div class="video-card" onclick="openPlayer('BipX70VPQMg')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/BipX70VPQMg/hqdefault.jpg" alt="Video 5">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/BipX70VPQMg/hqdefault.jpg" alt="Video 5"><div class="play-button"></div></div>
                 <div class="video-info">Video 5</div>
             </div>
-
-            <!-- Video Item 6 -->
             <div class="video-card" onclick="openPlayer('c1hY9_k9Kfk')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/c1hY9_k9Kfk/hqdefault.jpg" alt="Video 6">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/c1hY9_k9Kfk/hqdefault.jpg" alt="Video 6"><div class="play-button"></div></div>
                 <div class="video-info">Video 6</div>
             </div>
-
-            <!-- Video Item 7 -->
             <div class="video-card" onclick="openPlayer('gkSO4JmJ8L4')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/gkSO4JmJ8L4/hqdefault.jpg" alt="Video 7">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/gkSO4JmJ8L4/hqdefault.jpg" alt="Video 7"><div class="play-button"></div></div>
                 <div class="video-info">Video 7</div>
             </div>
-
-            <!-- Video Item 8 -->
             <div class="video-card" onclick="openPlayer('caRlpUytqto')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/caRlpUytqto/hqdefault.jpg" alt="Video 8">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/caRlpUytqto/hqdefault.jpg" alt="Video 8"><div class="play-button"></div></div>
                 <div class="video-info">Video 8</div>
             </div>
-
-            <!-- Video Item 9 -->
             <div class="video-card" onclick="openPlayer('e5LShHAE03A')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/e5LShHAE03A/hqdefault.jpg" alt="Video 9">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/e5LShHAE03A/hqdefault.jpg" alt="Video 9"><div class="play-button"></div></div>
                 <div class="video-info">Video 9</div>
             </div>
-
-            <!-- Video Item 10 -->
             <div class="video-card" onclick="openPlayer('bfOy-UNi0kE')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/bfOy-UNi0kE/hqdefault.jpg" alt="Video 10">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/bfOy-UNi0kE/hqdefault.jpg" alt="Video 10"><div class="play-button"></div></div>
                 <div class="video-info">Video 10</div>
             </div>
-
-            <!-- Video Item 11 -->
             <div class="video-card" onclick="openPlayer('B72_HsUR0Vc')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/B72_HsUR0Vc/hqdefault.jpg" alt="Video 11">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/B72_HsUR0Vc/hqdefault.jpg" alt="Video 11"><div class="play-button"></div></div>
                 <div class="video-info">Video 11</div>
             </div>
-
-            <!-- Video Item 12 -->
             <div class="video-card" onclick="openPlayer('q96_FDAUZdY')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/q96_FDAUZdY/hqdefault.jpg" alt="Video 12">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/q96_FDAUZdY/hqdefault.jpg" alt="Video 12"><div class="play-button"></div></div>
                 <div class="video-info">Video 12</div>
             </div>
-
-            <!-- Video Item 13 -->
             <div class="video-card" onclick="openPlayer('zBvggfZOK5o')">
-                <div class="thumbnail-container">
-                    <img src="https://img.youtube.com/vi/zBvggfZOK5o/hqdefault.jpg" alt="Video 13">
-                    <div class="play-button"></div>
-                </div>
+                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/zBvggfZOK5o/hqdefault.jpg" alt="Video 13"><div class="play-button"></div></div>
                 <div class="video-info">Video 13</div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Video Player -->
-    <div id="videoModal" class="modal" onclick="closePlayer(event)">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closePlayerDirect()">&times;</span>
-            <iframe id="playerIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <!-- Modal with Anti-Redirect Overlay Masks -->
+    <div id="videoModal" class="modal">
+        <div class="modal-wrapper">
+            <div class="modal-content">
+                <!-- Transparent Click Blockers -->
+                <div class="mask-top"></div>
+                <div class="mask-bottom-right"></div>
+                
+                <div id="player"></div>
+            </div>
+            <div class="custom-controls">
+                <button id="togglePlayBtn" onclick="togglePlay()">Pause</button>
+                <button class="close-btn" onclick="closePlayer()">Close Video</button>
+            </div>
         </div>
     </div>
 
     <script>
+        let player;
+        let isPlaying = false;
+
+        // Load YouTube IFrame API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
         function openPlayer(videoId) {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('playerIframe');
+            document.getElementById('videoModal').style.display = 'flex';
             
-            // Set autoplay URL
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            modal.style.display = 'flex';
+            if (player) {
+                player.loadVideoById(videoId);
+            } else {
+                player = new YT.Player('player', {
+                    videoId: videoId,
+                    playerVars: {
+                        'autoplay': 1,
+                        'controls': 1,
+                        'modestbranding': 1,
+                        'rel': 0,
+                        'fs': 0, // Disable Fullscreen to prevent open in YouTube app
+                        'disablekb': 1
+                    },
+                    events: {
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+            isPlaying = true;
+            document.getElementById('togglePlayBtn').innerText = 'Pause';
         }
 
-        function closePlayerDirect() {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('playerIframe');
-            
-            modal.style.display = 'none';
-            iframe.src = ''; // Stop video on close
+        function togglePlay() {
+            if (isPlaying) {
+                player.pauseVideo();
+                document.getElementById('togglePlayBtn').innerText = 'Play';
+            } else {
+                player.playVideo();
+                document.getElementById('togglePlayBtn').innerText = 'Pause';
+            }
+            isPlaying = !isPlaying;
         }
 
-        function closePlayer(event) {
-            // Close when clicking outside the video container
-            if (event.target.id === 'videoModal') {
-                closePlayerDirect();
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                document.getElementById('togglePlayBtn').innerText = 'Pause';
+            } else if (event.data == YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                document.getElementById('togglePlayBtn').innerText = 'Play';
+            }
+        }
+
+        function closePlayer() {
+            document.getElementById('videoModal').style.display = 'none';
+            if (player) {
+                player.stopVideo();
             }
         }
     </script>
