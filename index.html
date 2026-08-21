@@ -188,13 +188,12 @@
     <div class="card-container">
         <h1 class="main-title">Wish you A Very Very Happy Birthday My Wife My Baby 💋💋💋💋💋💋💋💋💋💋💋💋💋 ❤️</h1>
 
-       <div class="audio-box">
-    <audio id="myAudio" controls loop preload="auto">
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
-</div>
+        <div class="audio-box">
+            <audio id="myAudio" controls loop preload="auto">
+                <source src="song.mp3" type="audio/mpeg">
+            </audio>
+        </div>
 
-        <!-- PAGE 1 -->
         <div class="page active" id="p1">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -207,7 +206,6 @@
             </div>
         </div>
 
-        <!-- PAGE 2 -->
         <div class="page" id="p2">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -220,7 +218,6 @@
             </div>
         </div>
 
-        <!-- PAGE 3 -->
         <div class="page" id="p3">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -233,7 +230,6 @@
             </div>
         </div>
 
-        <!-- PAGE 4 -->
         <div class="page" id="p4">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -246,7 +242,6 @@
             </div>
         </div>
 
-        <!-- PAGE 5 -->
         <div class="page" id="p5">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -259,7 +254,6 @@
             </div>
         </div>
 
-        <!-- PAGE 6 -->
         <div class="page" id="p6">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -272,7 +266,6 @@
             </div>
         </div>
 
-        <!-- PAGE 7 -->
         <div class="page" id="p7">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -285,7 +278,6 @@
             </div>
         </div>
 
-        <!-- PAGE 8 -->
         <div class="page" id="p8">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -298,7 +290,6 @@
             </div>
         </div>
 
-        <!-- PAGE 9 -->
         <div class="page" id="p9">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -311,7 +302,6 @@
             </div>
         </div>
 
-        <!-- PAGE 10 -->
         <div class="page" id="p10">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -324,7 +314,6 @@
             </div>
         </div>
 
-        <!-- PAGE 11 -->
         <div class="page" id="p11">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -337,7 +326,6 @@
             </div>
         </div>
 
-        <!-- PAGE 12 -->
         <div class="page" id="p12">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -350,7 +338,6 @@
             </div>
         </div>
 
-        <!-- PAGE 13 -->
         <div class="page" id="p13">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -363,7 +350,6 @@
             </div>
         </div>
 
-        <!-- PAGE 14 -->
         <div class="page" id="p14">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -376,7 +362,6 @@
             </div>
         </div>
 
-        <!-- PAGE 15 -->
         <div class="page" id="p15">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -389,7 +374,6 @@
             </div>
         </div>
 
-        <!-- PAGE 16 -->
         <div class="page" id="p16">
             <div class="gif-frame">
                 <div class="anim-box">
@@ -402,7 +386,6 @@
             </div>
         </div>
 
-        <!-- PAGE 17 -->
         <div class="page" id="p17">
             <div class="gif-frame">
                 <div class="hearts-container" id="heartsBox"></div>
@@ -418,17 +401,28 @@
             </div>
         </div>
 
-        <!-- CONTROLS -->
+        <div class="page" id="p18">
+            <div class="gif-frame" style="height: 300px;">
+                <video id="myVideo" width="100%" height="100%" controls style="border-radius: 15px; object-fit: cover;">
+                    <source src="video.mp4" type="video/mp4">
+                    आपका ब्राउज़र वीडियो सपोर्ट नहीं करता।
+                </video>
+            </div>
+            <div class="shayari-box">
+                हमारे खूबसूरत लम्हे... ❤️<br>I Love You Forever My Baby! 🎬💖
+            </div>
+        </div>
+
         <div class="nav-buttons">
             <button class="btn" id="nextBtn" onclick="navigate(1)">Next Baby 💕 ➔</button>
         </div>
 
-        <div class="page-number" id="pageNum">Page 1 / 17</div>
+        <div class="page-number" id="pageNum">Page 1 / 18</div>
     </div>
 
     <script>
         let currPage = 1;
-        const maxPages = 17;
+        const maxPages = 18;
         let isAudioPlaying = false;
 
         function playAudio() {
@@ -454,12 +448,27 @@
             document.getElementById('p' + currPage).classList.add('active');
 
             const nextBtn = document.getElementById('nextBtn');
+
             if (currPage === 16) {
                 nextBtn.innerText = "Last One More Baby 💖 ➔";
-            } else if (currPage === maxPages) {
+            } else if (currPage === 17) {
                 nextBtn.innerText = "Thank You Baby ❤️";
-                nextBtn.onclick = null;
                 startFloatingHearts();
+            } else if (currPage === maxPages) {
+                // बटन छिपा दें
+                nextBtn.style.display = "none";
+                
+                // ऑडियो (गाना) रोकें
+                const audio = document.getElementById('myAudio');
+                if (audio) {
+                    audio.pause();
+                }
+
+                // वीडियो स्टार्ट करें
+                const video = document.getElementById('myVideo');
+                if (video) {
+                    video.play();
+                }
             } else {
                 nextBtn.innerText = "Next Baby 💕 ➔";
             }
