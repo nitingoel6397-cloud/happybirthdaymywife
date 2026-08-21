@@ -3,310 +3,483 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strict In-Page Video Gallery</title>
+    <title>Wish you A Very Very Happy Birthday My Wife My Baby ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #121212;
-            color: #ffffff;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #ff4757;
-        }
-        
-        /* Video Grid Layout */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .video-card {
-            background: #1e1e1e;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-        }
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
-        }
-        .thumbnail-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background-color: #000;
-        }
-        .thumbnail-container img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 0, 0, 0.85);
-            border-radius: 50%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        .play-button::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 0;
-            border-top: 9px solid transparent;
-            border-bottom: 9px solid transparent;
-            border-left: 15px solid white;
-            margin-left: 3px;
-        }
-        .video-info {
-            padding: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
+            align-items: center;
+            padding: 15px;
+            overflow-x: hidden;
         }
 
-        /* Modal Styles */
-        .modal {
+        .card-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 25px;
+            padding: 25px 20px;
+            box-shadow: 0 15px 35px rgba(223, 56, 120, 0.35);
+            text-align: center;
+            border: 3px solid #ffccd5;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title {
+            font-family: 'Yatra One', cursive;
+            font-size: 1.8rem;
+            color: #d81b60;
+            margin-bottom: 15px;
+        }
+
+        .audio-box {
+            background: #fff0f5;
+            padding: 10px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #ffb6c1;
+        }
+
+        audio {
+            width: 100%;
+            height: 35px;
+        }
+
+        .page {
             display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .gif-frame {
+            width: 100%;
+            height: 240px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border: 3px solid #ffe6ed;
+            margin-bottom: 20px;
+            background: #ffebee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .anim-box {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        .modal-wrapper {
-            position: relative;
-            width: 90%;
-            max-width: 900px;
-        }
-        .modal-content {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #000;
-            border-radius: 8px 8px 0 0;
-            overflow: hidden;
-        }
-        .modal-content iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+
+        .anim-icon {
+            font-size: 70px;
+            animation: pulseAnim 1.2s infinite ease-in-out;
         }
 
-        /* Anti-Redirection Masks */
-        /* Top Mask: Blocks Title & Share Button */
-        .mask-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            z-index: 10;
-            background: transparent;
-        }
-        /* Bottom-Right Mask: Blocks "Watch on YouTube" & Logo */
-        .mask-bottom-right {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 160px;
-            height: 50px;
-            z-index: 10;
-            background: transparent;
+        @keyframes pulseAnim {
+            0%, 100% { transform: scale(0.9) translateY(0); }
+            50% { transform: scale(1.15) translateY(-8px); }
         }
 
-        /* Custom In-Page Controls Bar */
-        .custom-controls {
+        .floating-text {
+            font-size: 1.05rem;
+            margin-top: 10px;
+            color: #c2185b;
+            font-weight: bold;
+        }
+
+        .shayari-box {
+            background: #fff5f8;
+            padding: 18px;
+            border-radius: 18px;
+            border-left: 5px solid #ff2a6d;
+            color: #880e4f;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-weight: 600;
+            margin-bottom: 20px;
+            min-height: 110px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background: #1e1e1e;
-            padding: 10px 15px;
-            border-radius: 0 0 8px 8px;
+            justify-content: center;
         }
-        .custom-controls button {
-            background: #ff4757;
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff4081, #e91e63);
             color: #fff;
             border: none;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 12px 20px;
+            font-size: 1rem;
             font-weight: bold;
-            border-radius: 4px;
+            border-radius: 50px;
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+            width: 100%;
         }
-        .custom-controls button:hover {
-            background: #ff6b81;
+
+        .page-number {
+            font-size: 0.85rem;
+            color: #ad1457;
+            font-weight: bold;
+            margin-top: 12px;
         }
-        .close-btn {
-            background: #333 !important;
+
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 3s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-260px) scale(1.3) rotate(20deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1> Nitin Video Gallery (No YouTube Redirection)</h1>
+    <div class="card-container">
+        <h1 class="main-title">Wish you A Very Very Happy Birthday My Wife My Baby 💋💋💋💋💋💋💋💋💋💋💋💋💋 ❤️</h1>
 
-        <div class="video-grid">
-            <div class="video-card" onclick="openPlayer('f7n0TzjPhT4')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/f7n0TzjPhT4/hqdefault.jpg" alt="Video 1"><div class="play-button"></div></div>
-                <div class="video-info">song 1</div>
+       <div class="audio-box">
+    <audio id="myAudio" controls loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+        <!-- PAGE 1 -->
+        <div class="page active" id="p1">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🫂❤️</div>
+                    <div class="floating-text">💖 💋💋💋💋 💖</div>
+                </div>
             </div>
-            <div class="video-card" onclick="openPlayer('6BDkp4NgTkU')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/6BDkp4NgTkU/hqdefault.jpg" alt="Video 2"><div class="play-button"></div></div>
-                <div class="video-info">song 2</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('oajsY7dtEFA')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/oajsY7dtEFA/hqdefault.jpg" alt="Video 3"><div class="play-button"></div></div>
-                <div class="video-info">song 3</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('cy_jttAa0k0')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/cy_jttAa0k0/hqdefault.jpg" alt="Video 4"><div class="play-button"></div></div>
-                <div class="video-info">song 4</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('BipX70VPQMg')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/BipX70VPQMg/hqdefault.jpg" alt="Video 5"><div class="play-button"></div></div>
-                <div class="video-info">song 5</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('c1hY9_k9Kfk')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/c1hY9_k9Kfk/hqdefault.jpg" alt="Video 6"><div class="play-button"></div></div>
-                <div class="video-info">song 6</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('gkSO4JmJ8L4')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/gkSO4JmJ8L4/hqdefault.jpg" alt="Video 7"><div class="play-button"></div></div>
-                <div class="video-info">song 7</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('caRlpUytqto')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/caRlpUytqto/hqdefault.jpg" alt="Video 8"><div class="play-button"></div></div>
-                <div class="video-info">song 8</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('e5LShHAE03A')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/e5LShHAE03A/hqdefault.jpg" alt="Video 9"><div class="play-button"></div></div>
-                <div class="video-info">song 9</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('bfOy-UNi0kE')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/bfOy-UNi0kE/hqdefault.jpg" alt="Video 10"><div class="play-button"></div></div>
-                <div class="video-info">song 10</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('B72_HsUR0Vc')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/B72_HsUR0Vc/hqdefault.jpg" alt="Video 11"><div class="play-button"></div></div>
-                <div class="video-info">song 11</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('q96_FDAUZdY')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/q96_FDAUZdY/hqdefault.jpg" alt="Video 12"><div class="play-button"></div></div>
-                <div class="video-info">song 12</div>
-            </div>
-            <div class="video-card" onclick="openPlayer('zBvggfZOK5o')">
-                <div class="thumbnail-container"><img src="https://img.youtube.com/vi/zBvggfZOK5o/hqdefault.jpg" alt="Video 13"><div class="play-button"></div></div>
-                <div class="video-info">song 13</div>
+            <div class="shayari-box">
+                मेरी प्यारी बीवी,<br>आप मेरी ज़िंदगी का सबसे सुंदर तोहफ़ा हो। जन्मदिन बहुत बहुत मुबारक हो मेरी जान! 💕
             </div>
         </div>
-    </div>
 
-    <!-- Modal with Anti-Redirect Overlay Masks -->
-    <div id="videoModal" class="modal">
-        <div class="modal-wrapper">
-            <div class="modal-content">
-                <!-- Transparent Click Blockers -->
-                <div class="mask-top"></div>
-                <div class="mask-bottom-right"></div>
-                
-                <div id="player"></div>
+        <!-- PAGE 2 -->
+        <div class="page" id="p2">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">👩‍❤️‍💋‍👨💋</div>
+                    <div class="floating-text">✨ 💋💋💋💋✨</div>
+                </div>
             </div>
-            <div class="custom-controls">
-                <button id="togglePlayBtn" onclick="togglePlay()">Pause</button>
-                <button class="close-btn" onclick="closePlayer()">Close Video</button>
+            <div class="shayari-box">
+                चेहरे पर आपके हंसी सदा रहे,<br>हर खुशी आपकी गुलाम रहे।<br>ज़िंदगी में कभी कोई ग़म न आए,<br>आपका हर दिन एक नया पैगाम रहे। 🌹
             </div>
         </div>
+
+        <!-- PAGE 3 -->
+        <div class="page" id="p3">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🤗💕</div>
+                    <div class="floating-text">🌸 Warmest Hug For You 🌸</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                तुमसे ही मेरी हर सुबह होती है,<br>तुमसे ही मेरी हर शाम होती है।<br>मुबारक हो तुम्हें ये ख़ास दिन,<br>मेरी तो हर दुआ तुम्हारे नाम होती है। ✨
+            </div>
+        </div>
+
+        <!-- PAGE 4 -->
+        <div class="page" id="p4">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">😘💖</div>
+                    <div class="floating-text">💫 Forehead Kiss 💫</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                खुदा कैसे शुक्रिया अदा करूं तुम्हारे लिए,<br>जिसे मांगा था दुआओं में हर एक दिन के लिए।<br>आप जैसा हमसफ़र मिला है मुझे,<br>लाखों में एक हो तुम मेरी जान के लिए। 💑
+            </div>
+        </div>
+
+        <!-- PAGE 5 -->
+        <div class="page" id="p5">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">👩‍❤️‍👨</div>
+                    <div class="floating-text">💖 Loving Cuddle 💖</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                आपकी सूरत मेरे दिल में बस गई है,<br>आपकी सीरत मेरी रूह में उतर गई है।<br>जन्मदिन की बहुत बहुत शुभकामनाएं,<br>तुझसे ही मेरी हर सांस जुड़ी है। 💖
+            </div>
+        </div>
+
+        <!-- PAGE 6 -->
+        <div class="page" id="p6">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">💓🥰</div>
+                    <div class="floating-text">💘 Endless Love 💘</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                दिल से मेरी दुआ है कि खुश रहो तुम,<br>मिले न कोई ग़म जहाँ भी रहो तुम।<br>समंदर की तरह गहरा है प्यार मेरा,<br>मेरी हसरतों की पहली और आखिरी वजह हो तुम। ❤️
+            </div>
+        </div>
+
+        <!-- PAGE 7 -->
+        <div class="page" id="p7">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">👩‍❤️‍💋‍👩</div>
+                    <div class="floating-text">💋 Soft Passionate Kiss 💋</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                तेरी धड़कन ही मेरी जिंदगी का सहारा है,<br>तेरा प्यार ही मेरी खुशियों का सितारा है।<br>जन्मदिन पर ये वादा है मेरा तुमसे,<br>हर जन्म में तू ही मेरा हमसफर प्यारा है। 🌹
+            </div>
+        </div>
+
+        <!-- PAGE 8 -->
+        <div class="page" id="p8">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🧸💖</div>
+                    <div class="floating-text">💗 Cute Teddy Hug 💗</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                ना सात फेरों की जरूरत है,<br>ना किसी रस्म की चाहत है।<br>तू मेरी रूह में समाई है,<br>मुझे बस तेरी ही इबादत है। 💞
+            </div>
+        </div>
+
+        <!-- PAGE 9 -->
+        <div class="page" id="p9">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">✨💏✨</div>
+                    <div class="floating-text">💫 Romantic Moment 💫</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                तुम्हारी मुस्कान ही मेरी दुनिया है,<br>तुम्हारा गुस्सा भी मुझे प्यारा लगता है।<br>तुम्हारे बिना ये दिल उदास रहता है,<br>तू साथ हो तो हर लम्हा सुहाना लगता है। ✨
+            </div>
+        </div>
+
+        <!-- PAGE 10 -->
+        <div class="page" id="p10">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🥰💋</div>
+                    <div class="floating-text">🌷 Sweet Cheek Kiss 🌷</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                हंसते रहें आप हज़ारों के बीच में,<br>जैसे खिलते हैं फूल बहारों के बीच में।<br>रोशन हो आपकी ज़िंदगी ऐसे,<br>जैसे होता है चाँद सितारों के बीच में। 🌙
+            </div>
+        </div>
+
+        <!-- PAGE 11 -->
+        <div class="page" id="p11">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🫂✨</div>
+                    <div class="floating-text">💖 Soulmate Hug 💖</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                मेरी हर खुशी की वजह तुम हो,<br>मेरी हर दुआ का असर तुम हो।<br>माँगूँ क्या खुदा से अब मैं,<br>जब मेरी पूरी कायनात ही तुम हो। 💐
+            </div>
+        </div>
+
+        <!-- PAGE 12 -->
+        <div class="page" id="p12">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">💋❤️</div>
+                    <div class="floating-text">🌹 Flying Kiss 🌹</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                रख लूँ तुम्हें अपनी बाहों में छुपाकर,<br>कि हवा भी तुम्हें छूने की इज़ाज़त माँगे।<br>इतना प्यार दूँ तुम्हें इस जन्मदिन पर,<br>कि हर कोई हमारे जैसी मोहब्बत माँगे। 💖
+            </div>
+        </div>
+
+        <!-- PAGE 13 -->
+        <div class="page" id="p13">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">💍💖</div>
+                    <div class="floating-text">💍 Forever Yours 💍</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                तेरी मौजूदगी ही मेरी ज़िंदगी की रंगत है,<br>तेरी मुस्कुराहट ही मेरी सबसे बड़ी चाहत है।<br>कभी मत होना दूर मुझसे ऐ मेरी जान,<br>तू ही मेरी दुनिया और तू ही मेरी इबादत है। 💕
+            </div>
+        </div>
+
+        <!-- PAGE 14 -->
+        <div class="page" id="p14">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🌺🤍</div>
+                    <div class="floating-text">🌸 Pure Love Hug 🌸</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                हर लम्हा तेरी याद का साया है,<br>मेरे दिल ने तुझे ही अपना बनाया है।<br>जन्मदिन की मुबारकबाद हो मेरी रानी,<br>तूने ही मेरी ज़िंदगी को ख़ास बनाया है। 💌
+            </div>
+        </div>
+
+        <!-- PAGE 15 -->
+        <div class="page" id="p15">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">🎂🎉</div>
+                    <div class="floating-text">🥳 Birthday Magic 🥳</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                बार बार यह दिन आए,<br>बार बार यह दिल गाये।<br>तुम जियो हज़ारों साल,<br>यह मेरी है आरज़ू! Happy Birthday My Wife! 🎂🎉❤️
+            </div>
+        </div>
+
+        <!-- PAGE 16 -->
+        <div class="page" id="p16">
+            <div class="gif-frame">
+                <div class="anim-box">
+                    <div class="anim-icon">👰‍♀️🤵‍♂️💍</div>
+                    <div class="floating-text">💒 Shadi Kab Karogi Janeman? 💒</div>
+                </div>
+            </div>
+            <div class="shayari-box">
+                अब और इंतज़ार नहीं होता मुझसे,<br>जल्दी से शादी कर लो न!<br>तुम्हें अपनी दुल्हन बनाकर घर लाना है,<br>और पूरी ज़िंदगी बस तुम्हारे साथ बिताना है! 💍❤️
+            </div>
+        </div>
+
+        <!-- PAGE 17 -->
+        <div class="page" id="p17">
+            <div class="gif-frame">
+                <div class="hearts-container" id="heartsBox"></div>
+                <div class="anim-box">
+                    <div class="anim-icon">💋💋💋</div>
+                    <div class="floating-text" style="font-size: 1.2rem; color: #d81b60;">🔥 💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋 🔥</div>
+                </div>
+            </div>
+            <div class="shayari-box" style="font-size: 1.05rem; line-height: 1.8;">
+                Wish you a very very Happy Birthday My Wife!<br>
+                मेरा बच्चा, मेरी जान, मेरे बच्चे की मम्मी... I Love You So Much! ❤️<br>
+                मेरा प्यारा बाबू, मेरी जान... 💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋 💋💋💋
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="nav-buttons">
+            <button class="btn" id="nextBtn" onclick="navigate(1)">Next Baby 💕 ➔</button>
+        </div>
+
+        <div class="page-number" id="pageNum">Page 1 / 17</div>
     </div>
 
     <script>
-        let player;
-        let isPlaying = false;
+        let currPage = 1;
+        const maxPages = 17;
+        let isAudioPlaying = false;
 
-        // Load YouTube IFrame API
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        function openPlayer(videoId) {
-            document.getElementById('videoModal').style.display = 'flex';
-            
-            if (player) {
-                player.loadVideoById(videoId);
-            } else {
-                player = new YT.Player('player', {
-                    videoId: videoId,
-                    playerVars: {
-                        'autoplay': 1,
-                        'controls': 1,
-                        'modestbranding': 1,
-                        'rel': 0,
-                        'fs': 0, // Disable Fullscreen to prevent open in YouTube app
-                        'disablekb': 1
-                    },
-                    events: {
-                        'onStateChange': onPlayerStateChange
-                    }
+        function playAudio() {
+            const audio = document.getElementById('myAudio');
+            if (audio && !isAudioPlaying) {
+                audio.play().then(() => {
+                    isAudioPlaying = true;
+                }).catch(err => {
+                    console.log("Audio play error:", err);
                 });
             }
-            isPlaying = true;
-            document.getElementById('togglePlayBtn').innerText = 'Pause';
         }
 
-        function togglePlay() {
-            if (isPlaying) {
-                player.pauseVideo();
-                document.getElementById('togglePlayBtn').innerText = 'Play';
+        document.addEventListener('click', playAudio, { once: true });
+        document.addEventListener('touchstart', playAudio, { once: true });
+
+        function navigate(dir) {
+            playAudio();
+
+            document.getElementById('p' + currPage).classList.remove('active');
+            currPage += dir;
+
+            document.getElementById('p' + currPage).classList.add('active');
+
+            const nextBtn = document.getElementById('nextBtn');
+            if (currPage === 16) {
+                nextBtn.innerText = "Last One More Baby 💖 ➔";
+            } else if (currPage === maxPages) {
+                nextBtn.innerText = "Thank You Baby ❤️";
+                nextBtn.onclick = null;
+                startFloatingHearts();
             } else {
-                player.playVideo();
-                document.getElementById('togglePlayBtn').innerText = 'Pause';
+                nextBtn.innerText = "Next Baby 💕 ➔";
             }
-            isPlaying = !isPlaying;
+
+            document.getElementById('pageNum').innerText = `Page ${currPage} / ${maxPages}`;
         }
 
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                isPlaying = true;
-                document.getElementById('togglePlayBtn').innerText = 'Pause';
-            } else if (event.data == YT.PlayerState.PAUSED) {
-                isPlaying = false;
-                document.getElementById('togglePlayBtn').innerText = 'Play';
-            }
-        }
+        function startFloatingHearts() {
+            const container = document.getElementById('heartsBox');
+            container.innerHTML = '';
+            const symbols = ['❤️', '💖', '💋', '💕', '💗', '🔥'];
 
-        function closePlayer() {
-            document.getElementById('videoModal').style.display = 'none';
-            if (player) {
-                player.stopVideo();
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = Math.random() * 90 + '%';
+                heart.style.animationDelay = (Math.random() * 2.5) + 's';
+                heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(heart);
             }
         }
     </script>
